@@ -1,5 +1,5 @@
 {
-  "name": "nextj13",
+  "name": "devflow",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.0.3",
     "@tailwindcss/typography": "^0.5.13",
     "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
-    "next": "14.0.0",
+    "next": "14.0.3",
     "prettier": "^3.0.3",
     "react": "^18",
     "react-dom": "^18",
