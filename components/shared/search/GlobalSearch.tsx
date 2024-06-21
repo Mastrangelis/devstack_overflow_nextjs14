@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
-import React from 'react';
 
 const GlobalSearch = () => {
   return (
@@ -17,7 +18,6 @@ const GlobalSearch = () => {
         <Input
           type="text"
           placeholder="Search globally"
-          value=""
           className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none"
         />
       </div>

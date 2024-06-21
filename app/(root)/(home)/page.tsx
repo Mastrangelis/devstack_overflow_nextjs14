@@ -7,62 +7,11 @@ import LocalSearch from '@/components/shared/search/LocalSearch';
 import { Button } from '@/components/ui/button';
 import { HomePageFilters } from '@/constants/filters';
 import Link from 'next/link';
+import { getQuestions } from '@/lib/actions/question.actions';
 
-const questions = [
-  {
-    _id: '1',
-    title: 'Cascading deletes in SQLAlchemy?????????????',
-    tags: [
-      { _id: '1', name: 'python' },
-      { _id: '2', name: 'sql' },
-    ],
-    author: {
-      _id: '1',
-      name: 'John Doe',
-      picture: '/assets/icons/avatar.svg',
-    },
-    upvotes: 10,
-    views: 100,
-    answers: [],
-    createdAt: new Date(),
-  },
-  {
-    _id: '2',
-    title: 'Cascading deletes in SQLAlchemy?',
-    tags: [
-      { _id: '1', name: 'python' },
-      { _id: '2', name: 'sql' },
-    ],
-    author: {
-      _id: '2',
-      name: 'John Doe',
-      picture: '/assets/icons/avatar.svg',
-    },
-    upvotes: 10,
-    views: 2200700,
-    answers: [],
-    createdAt: new Date(),
-  },
-  {
-    _id: '3',
-    title: 'Cascading deletes in SQLAlchemy?',
-    tags: [
-      { _id: '1', name: 'python' },
-      { _id: '2', name: 'sql' },
-    ],
-    author: {
-      _id: '3',
-      name: 'John Doe',
-      picture: '/assets/icons/avatar.svg',
-    },
-    upvotes: 100,
-    views: 1200,
-    answers: [],
-    createdAt: new Date(),
-  },
-];
+const Home = async () => {
+  const result = await getQuestions({});
 
-const Home = () => {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -91,9 +40,21 @@ const Home = () => {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => {
-            return <QuestionCard key={question._id} {...question} />;
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => {
+            return (
+              <QuestionCard
+                key={question._id as string}
+                _id={question._id as string}
+                title={question.title}
+                tags={question.tags}
+                author={question.author}
+                upvotes={question.upvotes}
+                views={question.views}
+                answers={question.answers}
+                createdAt={question.createdAt}
+              />
+            );
           })
         ) : (
           <NoResult
