@@ -49,14 +49,14 @@ const QuestionCard = ({
 
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
-          <Tag key={tag._id} {...tag} />
+          <Tag key={tag._id} _id={tag._id} name={tag.name} />
         ))}
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
           imgUrl={author.picture}
-          alt="Author"
+          alt="user"
           value={author.name}
           title={` - asked ${getTimestamp(createdAt)}`}
           href={`/profile/${author._id}`}
