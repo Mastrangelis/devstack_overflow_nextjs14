@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     }) as WebhookEvent;
   } catch (e) {
     console.error('Error verifying webhook:', e);
-    return new Response('Unauthorized', { status: 401 });
+    return new Response('SVIX signature cannot be verified.', { status: 401 });
   }
 
   const eventType = evt.type;
