@@ -1,8 +1,27 @@
 'use server';
 
+import Tag from '@/database/tag.model';
 import { connectToDB } from '../mongoose';
-import { GetTopInteractedTagsParams } from './shared.types';
+import { GetAllTagsParams, GetTopInteractedTagsParams } from './shared.types';
 import User from '@/database/user.model';
+
+export async function getAllTags(params: GetAllTagsParams) {
+  try {
+    connectToDB();
+
+    const { page = 1, pageSize = 20 } = params;
+
+    const tags = await Tag.find()
+      .skip(pageSize * (page - 1))
+      .limit(pageSize)
+      .exec();
+
+    return { tags };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
