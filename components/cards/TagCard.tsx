@@ -22,7 +22,7 @@ const TagCard = async ({ tag }: TagCardProps) => {
           <span className="body-semibold primary-text-gradient mr-2.5">
             {tag.questions.length}+
           </span>
-          {tag.questions}
+          Questions
         </p>
       </article>
     </Link>
