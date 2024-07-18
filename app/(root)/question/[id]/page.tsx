@@ -6,9 +6,21 @@ import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 import ParseHTML from '@/components/shared/ParseHTML';
 import Tag from '@/components/shared/Tag';
 import AnswerForm from '@/components/forms/AnswerForm';
+import { auth } from '@clerk/nextjs/server';
+import { getUserById } from '@/lib/actions/user.actions';
+import AllAnswers from '@/components/shared/AllAnswers';
+import Votes from '@/components/shared/Votes';
 
 const Question = async ({ params, searchParams }: any) => {
   const result = await getQuestionById({ questionId: params.id });
+
+  const { userId: clerkId } = auth();
+
+  let mongoUser;
+
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
 
   return (
     <>
@@ -29,7 +41,9 @@ const Question = async ({ params, searchParams }: any) => {
               {result?.author?.name}
             </p>
           </Link>
-          <div className="flex justify-end">{/* VOTING */}</div>
+          <div className="flex justify-end">
+            <Votes />
+          </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
           {result.title}
@@ -68,10 +82,18 @@ const Question = async ({ params, searchParams }: any) => {
         ))}
       </div>
 
+      <AllAnswers
+        questionId={result._id}
+        userId={mongoUser._id}
+        totalAnswers={result.answers.length}
+        page={searchParams?.page}
+        filter={searchParams?.filter}
+      />
+
       <AnswerForm
         question={result.content}
         questionId={JSON.stringify(result._id)}
-        authorId={JSON.stringify(result?.author?._id)}
+        authorId={JSON.stringify(mongoUser?._id)}
       />
     </>
   );
