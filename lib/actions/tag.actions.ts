@@ -48,8 +48,6 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
       select: '_id name',
     });
 
-    console.log('interactions', interactions);
-
     const tags =
       interactions
         .map((interaction) => interaction.tags)
@@ -99,6 +97,23 @@ export async function getQuestionsByTagId(params: GetQuestionsByTagIdParams) {
     const questions = tag.questions;
 
     return { tagTitle: tag.name, questions, isNext };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getTopPopularTags() {
+  try {
+    connectToDB();
+
+    const popularTags = await Tag.aggregate([
+      { $project: { name: 1, totalQuestions: { $size: '$questions' } } },
+      { $sort: { numberOfQuestions: -1 } },
+      { $limit: 5 },
+    ]);
+
+    return popularTags;
   } catch (error) {
     console.log(error);
     throw error;
