@@ -10,6 +10,7 @@ import {
 import User from '@/database/user.model';
 import Question from '@/database/question.model';
 import { FilterQuery } from 'mongoose';
+import Interaction from '@/database/interaction.model';
 
 export async function getAllTags(params: GetAllTagsParams) {
   try {
@@ -41,20 +42,22 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
       throw new Error('User not found');
     }
 
-    return [
-      {
-        _id: 'tag1',
-        name: 'Tag 1',
-      },
-      {
-        _id: 'tag2',
-        name: 'Tag 2',
-      },
-      {
-        _id: 'tag3',
-        name: 'Tag 3',
-      },
-    ];
+    const interactions = await Interaction.find({ user: userId }).populate({
+      path: 'tags',
+      model: Tag,
+      select: '_id name',
+    });
+
+    console.log('interactions', interactions);
+
+    const tags =
+      interactions
+        .map((interaction) => interaction.tags)
+        .filter((tag) => tag.length > 0)
+        .flat(1) || [];
+
+    console.log(tags);
+    return tags;
   } catch (error) {
     console.error(error);
     throw error;
