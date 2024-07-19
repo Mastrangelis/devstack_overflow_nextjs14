@@ -65,9 +65,7 @@ const Profile = ({ clerkId, user }: Props) => {
     }
   }
 
-  console.log('user', JSON.parse(user));
-  console.log('state', form.getValues());
-
+  // eslint-disable-next-line no-unused-vars
   const isUserDataChanged = () => {
     const userValues = JSON.parse(user);
     const {
@@ -89,7 +87,6 @@ const Profile = ({ clerkId, user }: Props) => {
     );
   };
 
-  console.log('isUserDataChanged', !!isUserDataChanged());
   return (
     <Form {...form}>
       <form
@@ -200,7 +197,7 @@ const Profile = ({ clerkId, user }: Props) => {
           <Button
             type="submit"
             className="primary-gradient w-fit !text-white"
-            disabled={isSubmitting || !isUserDataChanged()}
+            disabled={isSubmitting}
           >
             {isSubmitting ? 'Saving...' : 'Save'}
           </Button>
