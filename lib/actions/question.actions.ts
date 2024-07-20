@@ -15,15 +15,55 @@ import {
 import { revalidatePath } from 'next/cache';
 import Answer from '@/database/answer.model';
 import Interaction from '@/database/interaction.model';
+import { PipelineStage } from 'mongoose';
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDB();
 
-    const questions = await Question.find({})
-      .populate({ path: 'tags', model: Tag })
-      .populate({ path: 'author', model: User })
-      .sort({ createdAt: -1 });
+    const { searchQuery } = params;
+
+    const matchStage: PipelineStage = {
+      $match: {},
+    };
+
+    if (searchQuery) {
+      matchStage.$match.$or = [
+        { title: { $regex: new RegExp(searchQuery, 'i') } },
+        { content: { $regex: new RegExp(searchQuery, 'i') } },
+        { 'tags.name': { $regex: new RegExp(searchQuery, 'i') } },
+        { 'author.name': { $regex: new RegExp(searchQuery, 'i') } },
+      ];
+    }
+
+    const questions = await Question.aggregate([
+      {
+        $lookup: {
+          from: 'tags',
+          localField: 'tags',
+          foreignField: '_id',
+          as: 'tags',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'author',
+          foreignField: '_id',
+          as: 'author',
+        },
+      },
+      {
+        $unwind: {
+          path: '$author',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      matchStage,
+      {
+        $sort: { createdAt: -1 },
+      },
+    ]);
 
     return { questions };
   } catch (error) {
