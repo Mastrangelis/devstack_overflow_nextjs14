@@ -16,9 +16,15 @@ export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDB();
 
-    const { page = 1, pageSize = 20 } = params;
+    const { page = 1, pageSize = 20, searchQuery } = params;
 
-    const tags = await Tag.find()
+    const query: FilterQuery<typeof Tag> = searchQuery
+      ? {
+          $or: [{ name: { $regex: new RegExp(searchQuery, 'i') } }],
+        }
+      : {};
+
+    const tags = await Tag.find(query)
       .skip(pageSize * (page - 1))
       .limit(pageSize)
       .exec();
