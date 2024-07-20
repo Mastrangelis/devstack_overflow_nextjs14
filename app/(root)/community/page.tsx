@@ -11,6 +11,7 @@ const Community = async ({ searchParams }: SearchParamsProps) => {
     page: 1,
     pageSize: 20,
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
   return (

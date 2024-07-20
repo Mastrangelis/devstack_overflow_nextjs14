@@ -21,10 +21,14 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDB();
 
-    const { searchQuery } = params;
+    const { searchQuery, filter } = params;
 
     const matchStage: PipelineStage = {
       $match: {},
+    };
+
+    const sortStage: PipelineStage = {
+      $sort: { createdAt: -1 },
     };
 
     if (searchQuery) {
@@ -34,6 +38,20 @@ export async function getQuestions(params: GetQuestionsParams) {
         { 'tags.name': { $regex: new RegExp(searchQuery, 'i') } },
         { 'author.name': { $regex: new RegExp(searchQuery, 'i') } },
       ];
+    }
+
+    switch (filter) {
+      case 'newest':
+        sortStage.$sort = { createdAt: -1 };
+        break;
+      case 'frequent':
+        sortStage.$sort = { views: -1 };
+        break;
+      case 'unanswered':
+        matchStage.$match.answers = { $size: 0 };
+        break;
+      default:
+        break;
     }
 
     const questions = await Question.aggregate([
@@ -60,9 +78,7 @@ export async function getQuestions(params: GetQuestionsParams) {
         },
       },
       matchStage,
-      {
-        $sort: { createdAt: -1 },
-      },
+      sortStage,
     ]);
 
     return { questions };
