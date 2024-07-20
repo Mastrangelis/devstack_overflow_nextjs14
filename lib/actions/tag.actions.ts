@@ -16,7 +16,7 @@ export async function getAllTags(params: GetAllTagsParams) {
   try {
     connectToDB();
 
-    const { page = 1, pageSize = 20, searchQuery } = params;
+    const { page = 1, pageSize = 20, searchQuery, filter } = params;
 
     const query: FilterQuery<typeof Tag> = searchQuery
       ? {
@@ -24,7 +24,28 @@ export async function getAllTags(params: GetAllTagsParams) {
         }
       : {};
 
+    let sortOptions = {};
+
+    switch (filter) {
+      case 'popular':
+        sortOptions = { questions: -1 };
+        break;
+      case 'recent':
+        sortOptions = { createdAt: -1 };
+        break;
+      case 'name':
+        sortOptions = { name: 1 };
+        break;
+      case 'old':
+        sortOptions = { createdAt: 1 };
+        break;
+
+      default:
+        break;
+    }
+
     const tags = await Tag.find(query)
+      .sort(sortOptions)
       .skip(pageSize * (page - 1))
       .limit(pageSize)
       .exec();

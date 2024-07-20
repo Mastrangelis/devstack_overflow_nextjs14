@@ -24,7 +24,6 @@ export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDB();
 
-    // eslint-disable-next-line no-unused-vars
     const { page = 1, pageSize = 20, filter, searchQuery } = params;
 
     const query: FilterQuery<typeof User> = {};
@@ -36,7 +35,28 @@ export async function getAllUsers(params: GetAllUsersParams) {
       ];
     }
 
+    let sortOptions = {};
+
+    switch (filter) {
+      case 'popular':
+        sortOptions = { questions: -1 };
+        break;
+      case 'recent':
+        sortOptions = { createdAt: -1 };
+        break;
+      case 'name':
+        sortOptions = { name: 1 };
+        break;
+      case 'old':
+        sortOptions = { createdAt: 1 };
+        break;
+
+      default:
+        break;
+    }
+
     const users = await User.find(query)
+      .sort(sortOptions)
       .skip((page - 1) * pageSize)
       .limit(pageSize)
       .exec();
