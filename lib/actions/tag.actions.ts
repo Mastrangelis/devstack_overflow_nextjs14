@@ -18,6 +18,8 @@ export async function getAllTags(params: GetAllTagsParams) {
 
     const { page = 1, pageSize = 20, searchQuery, filter } = params;
 
+    const skipAmount = (page - 1) * pageSize;
+
     const query: FilterQuery<typeof Tag> = searchQuery
       ? {
           $or: [{ name: { $regex: new RegExp(searchQuery, 'i') } }],
@@ -44,13 +46,17 @@ export async function getAllTags(params: GetAllTagsParams) {
         break;
     }
 
+    const totalTags = await Tag.countDocuments(query);
+
     const tags = await Tag.find(query)
       .sort(sortOptions)
-      .skip(pageSize * (page - 1))
+      .skip(skipAmount)
       .limit(pageSize)
       .exec();
 
-    return { tags };
+    const isNext = totalTags > skipAmount + tags.length;
+
+    return { tags, isNext };
   } catch (error) {
     console.error(error);
     throw error;

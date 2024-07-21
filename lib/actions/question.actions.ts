@@ -21,7 +21,9 @@ export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDB();
 
-    const { searchQuery, filter } = params;
+    const { searchQuery, filter, page = 1, pageSize = 10 } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const matchStage: PipelineStage = {
       $match: {},
@@ -32,11 +34,16 @@ export async function getQuestions(params: GetQuestionsParams) {
     };
 
     if (searchQuery) {
+      const escapedSearchQuery = searchQuery.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        '\\$&',
+      );
+
       matchStage.$match.$or = [
-        { title: { $regex: new RegExp(searchQuery, 'i') } },
-        { content: { $regex: new RegExp(searchQuery, 'i') } },
-        { 'tags.name': { $regex: new RegExp(searchQuery, 'i') } },
-        { 'author.name': { $regex: new RegExp(searchQuery, 'i') } },
+        { title: { $regex: new RegExp(escapedSearchQuery, 'i') } },
+        { content: { $regex: new RegExp(escapedSearchQuery, 'i') } },
+        { 'tags.name': { $regex: new RegExp(escapedSearchQuery, 'i') } },
+        { 'author.name': { $regex: new RegExp(escapedSearchQuery, 'i') } },
       ];
     }
 
@@ -79,9 +86,15 @@ export async function getQuestions(params: GetQuestionsParams) {
       },
       matchStage,
       sortStage,
+      { $skip: skipAmount },
+      { $limit: pageSize },
     ]);
 
-    return { questions };
+    const totalQuestions = await Question.countDocuments(matchStage.$match);
+
+    const isNext = totalQuestions > skipAmount + questions.length;
+
+    return { questions, isNext, total: totalQuestions / pageSize };
   } catch (error) {
     console.error(error);
     throw error;
