@@ -9,11 +9,13 @@ import { HomePageFilters } from '@/constants/filters';
 import Link from 'next/link';
 import { getQuestions } from '@/lib/actions/question.actions';
 import { SearchParamsProps } from '@/types';
+import Pagination from '@/components/shared/Pagination';
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const result = await getQuestions({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
@@ -70,6 +72,13 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
             linkTitle="Ask a question"
           />
         )}
+      </div>
+      <div className="mt-10">
+        <Pagination
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+          total={result.total}
+        />
       </div>
     </>
   );
