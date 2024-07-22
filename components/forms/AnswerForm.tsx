@@ -80,7 +80,6 @@ const AnswerForm = ({ question, questionId, authorId }: Props) => {
       const aiAnswer = await response.json();
 
       // Convert plain text to HTML format
-
       const formattedAnswer = aiAnswer.reply.replace(/\n/g, '<br />');
 
       if (editorRef.current) {
