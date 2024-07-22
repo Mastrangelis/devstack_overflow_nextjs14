@@ -129,6 +129,17 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocs } },
     });
 
+    // Create an interaction record for the user's ask_question action
+    await Interaction.create({
+      user: author,
+      action: 'ask_question',
+      question: question._id,
+      tags: tagDocs,
+    });
+
+    // Increment author's reputation by +5 for creating a question
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
+
     revalidatePath(path);
   } catch (error) {
     console.log(error);
