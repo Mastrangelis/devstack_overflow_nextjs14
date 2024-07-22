@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { ProfileSchema } from '@/lib/validations';
 import { usePathname, useRouter } from 'next/navigation';
 import { updateUser } from '@/lib/actions/user.actions';
+import { toast } from '../ui/use-toast';
 
 interface Props {
   clerkId: string;
@@ -57,9 +58,19 @@ const Profile = ({ clerkId, user }: Props) => {
         path: pathname,
       });
 
+      toast({
+        title: 'Profile updated successfully',
+        variant: 'default',
+      });
+
       router.back();
     } catch (error) {
       console.log(error);
+      toast({
+        title: 'An error occurred',
+        description: 'Please try again later',
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
