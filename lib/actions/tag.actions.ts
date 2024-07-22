@@ -87,7 +87,6 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
         .filter((tag) => tag.length > 0)
         .flat(1) || [];
 
-    console.log(tags);
     return tags;
   } catch (error) {
     console.error(error);
