@@ -18,6 +18,7 @@ import { Button } from '../ui/button';
 import Image from 'next/image';
 import { createAnswer } from '@/lib/actions/answer.actions';
 import { usePathname } from 'next/navigation';
+import { toast } from '../ui/use-toast';
 
 interface Props {
   question: string;
@@ -87,9 +88,16 @@ const AnswerForm = ({ question, questionId, authorId }: Props) => {
         editor.setContent(formattedAnswer);
       }
 
-      // Toast...
+      return toast({
+        title: `Answer succesfully posted`,
+        variant: 'default',
+      });
     } catch (error) {
       console.log(error);
+      toast({
+        title: 'Something went wrong posting answer. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setSetIsSubmittingAI(false);
     }
