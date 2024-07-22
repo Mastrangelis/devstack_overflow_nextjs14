@@ -6,6 +6,12 @@ import TagCard from '@/components/cards/TagCard';
 import NoResult from '@/components/shared/NoResult';
 import { SearchParamsProps } from '@/types';
 import Pagination from '@/components/shared/Pagination';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tags | Dev Overflow',
+  description: 'Tags for all the questions asked by the community members',
+};
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {
   const { tags, isNext } = await getAllTags({

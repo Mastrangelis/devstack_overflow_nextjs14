@@ -4,6 +4,9 @@ const isProtectedRoute = createRouteMatcher([
   '/ask-question',
   '/question(.*)',
   '/profile(.*)',
+  '/edit(.*)',
+  '/community(.*)',
+  '/collection(.*)',
   '/tag(.*)',
 ]);
 
