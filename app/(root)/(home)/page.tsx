@@ -11,6 +11,13 @@ import { getQuestions } from '@/lib/actions/question.actions';
 import { SearchParamsProps } from '@/types';
 import Pagination from '@/components/shared/Pagination';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Home | Dev Overflow',
+  description: 'All questions asked by the community members',
+};
+
 const Home = async ({ searchParams }: SearchParamsProps) => {
   const result = await getQuestions({
     searchQuery: searchParams.q,
