@@ -7,24 +7,20 @@ import { useRouter, useSearchParams } from 'next/navigation';
 interface Props {
   pageNumber: number;
   isNext: boolean;
-  total?: number;
 }
 
-const Pagination = ({ pageNumber, isNext, total = 0 }: Props) => {
+const Pagination = ({ pageNumber, isNext }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const handleNavigation = (
-    direction: 'prev' | 'next' | 'pageClick',
-    value?: string,
-  ) => {
+  const handleNavigation = (direction: string) => {
     const nextPageNumber =
       direction === 'prev' ? pageNumber - 1 : pageNumber + 1;
 
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
       key: 'page',
-      value: value || nextPageNumber.toString(),
+      value: nextPageNumber.toString(),
     });
 
     router.push(newUrl);
@@ -41,62 +37,9 @@ const Pagination = ({ pageNumber, isNext, total = 0 }: Props) => {
       >
         <p className="body-medium text-dark200_light800">Prev</p>
       </Button>
-
-      <Button
-        className="flex items-center justify-center rounded-md bg-primary-500 px-3.5 py-2"
-        onClick={() => handleNavigation('pageClick', pageNumber.toString())}
-      >
-        <p
-          className={`body-semibold text-light-900 ${pageNumber && 'text-light-900'}`}
-        >
-          {pageNumber}
-        </p>
-      </Button>
-
-      {pageNumber + 1 <= total && (
-        <Button
-          className={`btn flex items-center justify-center rounded-md ${pageNumber === pageNumber + 1 && 'bg-primary-500'} px-3.5 py-2`}
-          onClick={() =>
-            handleNavigation('pageClick', (pageNumber + 1).toString())
-          }
-        >
-          <p
-            className={`body-semibold text-dark200_light800 ${pageNumber === pageNumber + 1 && 'text-light-900'}`}
-          >
-            {pageNumber + 1}
-          </p>
-        </Button>
-      )}
-      {pageNumber + 2 <= total && (
-        <Button
-          className={`btn flex items-center justify-center rounded-md ${pageNumber === pageNumber + 2 && 'bg-primary-500'} px-3.5 py-2`}
-          onClick={() =>
-            handleNavigation('pageClick', (pageNumber + 2).toString())
-          }
-        >
-          <p
-            className={`body-semibold ${pageNumber === pageNumber + 2 ? 'text-light-900' : 'text-dark200_light800'}`}
-          >
-            {pageNumber + 2}
-          </p>
-        </Button>
-      )}
-
-      {pageNumber + 3 <= total && (
-        <Button
-          className={`btn flex items-center justify-center rounded-md ${pageNumber === pageNumber + 3 && 'bg-primary-500'} px-3.5 py-2`}
-          onClick={() =>
-            handleNavigation('pageClick', (pageNumber + 3).toString())
-          }
-        >
-          <p
-            className={`body-semibold ${pageNumber === pageNumber + 3 ? 'text-light-900' : 'text-dark200_light800'}`}
-          >
-            {pageNumber + 3}
-          </p>
-        </Button>
-      )}
-
+      <div className="flex items-center justify-center rounded-md bg-primary-500 px-3.5 py-2">
+        <p className="body-semibold text-light-900">{pageNumber}</p>
+      </div>
       <Button
         disabled={!isNext}
         onClick={() => handleNavigation('next')}
