@@ -140,7 +140,7 @@ export async function getTopPopularTags() {
     connectToDB();
 
     const popularTags = await Tag.aggregate([
-      { $project: { name: 1, totalQuestions: { $size: '$questions' } } },
+      { $project: { name: 1, numberOfQuestions: { $size: '$questions' } } },
       { $sort: { numberOfQuestions: -1 } },
       { $limit: 5 },
     ]);
