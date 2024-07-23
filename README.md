@@ -1,49 +1,253 @@
-<div align="center">
+# Devstack overflow with Next.js 14
 
-  <div>
-    <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="next.js" />
-    <img src="https://img.shields.io/badge/-React_JS-black?style=for-the-badge&logoColor=white&logo=react&color=61DAFB" alt="react.js" />
-    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
-    <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="mongodb">
-    <img src="https://img.shields.io/badge/Clerk-3E77FF?style=for-the-badge&logo=clerk&logoColor=white" alt="clerk">
-  </div>
+[![GitHub commits](https://img.shields.io/github/commit-activity/t/mastrangelis/devstack_overflow_nextjs14?style=social&logo=github)](https://github.com/mastrangelis/devstack_overflow_nextjs14/commits)
+[![mastrangelis](https://custom-icon-badges.demolab.com/badge/made%20by%20-mastrangelis-556bf2?logo=github&logoColor=white&labelColor=101827)](https://github.com/mastrangelis)
+[![Top Language](https://img.shields.io/github/languages/top/mastrangelis/devstack_overflow_nextjs14?logo=github&logoColor=%23007ACC&label=TypeScript)](https://www.typescriptlang.org/)
+![deployment](https://img.shields.io/github/deployments/mastrangelis/devstack_overflow_nextjs14/Production?logo=vercel&label=Website)
 
-  <h3 align="center">Devstack overflow with Next.js 14 (Still WIP.)</h3>
+## 📋 Table of Contents
 
-</div>
+<details><summary>Table of Contents</summary>
 
-## 📋 <a name="table">Table of Contents</a>
+- 🤖 [Introduction](#-introduction)
+- ⚙️ [Tech Stack](#️-tech-stack)
+- 🔋 [Features](#-features)
+- 🔨 [Deployment](#️-deployment)
+- 🤸 [Quick Start](#-quick-start)
+- 🔒 [Environment Variables](#-environment-variables)
 
-1. 🤖 [Introduction](#introduction)
-2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
-4. 🔨[Deployment](#deployment)
-5. 🤸 [Quick Start](#quick-start)
+</details>
 
-## <a name="introduction">🤖 Introduction</a>
+## 🤖 Introduction
 
-The Devstack overflow is a big fullstack project similar to the known for all of us "Stack overflow" using Next.js 14, React.js, TailwindCSS with Shadcn-ui for built in components and mongodb for storing data. It highlights the effective use of Nextjs14 with the app router for dynamic content.
+**DevOverflow** is a complex Q&A platform for developers to ask questions, share knowledge, and learn from each other. It is built with Next.js, Tailwind CSS, Clerk, MongoDB, and more.
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
+<details><summary><b>Folder Structure</b></summary>
 
-- Next.js 14
-- React.js
-- Typescript
-- Tailwind CSS
-- Shadcnui
-- Clerk
-- Mongodb
-- Sentry
+```bash
+nextjs14-devoverflow/
+├── app/
+├   ├── favicon.ico
+├   ├── globals.css
+├   ├── layout.tsx
+├   ├── (auth)/
+├   ├   ├── sign-in/[[...sign-in]]/
+├   ├   ├   └── page.tsx
+├   ├   ├── sign-up/[[...sign-up]]/
+├   ├   ├   └── page.tsx
+├   ├   └── layout.tsx
+├   ├── (root)/
+├   ├   ├── layout.tsx
+├   ├   ├── (home)/
+├   ├   ├   ├── loading.tsx
+├   ├   ├   └── page.tsx
+├   ├   ├── ask-question/
+├   ├   ├   └── page.tsx
+├   ├   ├── collection/
+├   ├   ├   ├── loading.tsx
+├   ├   ├   └── page.tsx
+├   ├   ├── community/
+├   ├   ├   ├── loading.tsx
+├   ├   ├   └── page.tsx
+├   ├   ├── jobs/
+├   ├   ├   ├── loading.tsx
+├   ├   ├   └── page.tsx
+├   ├   ├── profile/
+├   ├   ├   ├── [id]/
+├   ├   ├   ├   ├── loading.tsx
+├   ├   ├   ├   └── page.tsx
+├   ├   ├   └── edit/
+├   ├   ├       └── page.tsx
+├   ├   ├── question/
+├   ├   ├   ├── [id]/
+├   ├   ├   ├   └── page.tsx
+├   ├   ├   └── edit/
+├   ├   ├       └── [id]/
+├   ├   ├           └── page.tsx
+├   ├   └── tags/
+├   ├       ├── [id]/
+├   ├       ├   ├── loading.tsx
+├   ├       ├   └── page.tsx
+├   ├       ├── page.tsx
+├   ├       └── loading.tsx
+├   └── api/
+├       ├── chatgpt/
+├       ├   └── route.ts
+├       └── webhook/
+├              └── route.ts
+├── components/
+├   ├── cards/
+├   ├   ├── AnswerCard.tsx
+├   ├   ├── JobCard.tsx
+├   ├   ├── QuestionCard.tsx
+├   ├   └── UserCard.tsx
+├   ├   └── TagCard.tsx
+├   ├── forms/
+├   ├   ├── AnswerForm.tsx
+├   ├   ├── ProfileForm.tsx
+├   ├   └── QuestionForm.tsx
+├   ├── shared/
+├   ├   ├── AllAnswers.tsx
+├   ├   ├── EditDeleteAction.tsx
+├   ├   ├── Filter.tsx
+├   ├   ├── LeftSidebar.tsx
+├   ├   ├── Metric.tsx
+├   ├   ├── NoResult.tsx
+├   ├   ├── Pagination.tsx
+├   ├   ├── ParseHTML.tsx
+├   ├   ├── ProfileLink.tsx
+├   ├   ├── Tag.tsx
+├   ├   ├── RightSidebar.tsx
+├   ├   ├── Stats.tsx
+├   ├   ├── Votes.tsx
+├   ├   ├── CountrySelect.tsx
+├   ├   ├── tabs/
+├   ├   ├   ├── AnswersTab.tsx
+├   ├   ├   ├── QuestionsTab.tsx
+├   ├   ├── navbar/
+├   ├   ├   ├── Navbar.tsx
+├   ├   ├   ├── NavContent.tsx
+├   ├   ├   ├── MobileNav.tsx
+├   ├   ├   └── Theme.tsx
+├   ├   └── search/
+├   ├       ├── GlobalFilters.tsx
+├   ├       ├── GlobalResult.tsx
+├   ├       ├── GlobalSearch.tsx
+├   ├       └── LocalSearch.tsx
+├   └── ui/ (generated by shadcn-ui)
+├       ├── badge.tsx
+├       ├── button.tsx
+├       ├── form.tsx
+├       ├── input.tsx
+├       ├── label.tsx
+├       ├── menubar.tsx
+├       ├── select.tsx
+├       ├── sheet.tsx
+├       ├── skeleton.tsx
+├       ├── tabs.tsx
+├       ├── textarea.tsx
+├       ├── toast.tsx
+├       ├── toaster.tsx
+├       └── use-toast.ts
+├── constants/
+├   ├── filters.ts
+├   └── index.ts
+├── context/
+├   └── ThemeProvider.ts
+├── datbase/
+├   ├── answer.model.ts
+├   ├── interaction.model.ts
+├   ├── question.model.ts
+├   ├── tag.model.ts
+├   └── user.model.ts
+├── lib/
+├   ├── mongoose.ts
+├   ├── utils.ts
+├   ├── validations.ts
+├   └── actions/
+├       ├── answer.actions.ts
+├       ├── general.actions.ts
+├       ├── interaction.actions.ts
+├       ├── job.actions.ts
+├       ├── question.actions.ts
+├       ├── tag.actions.ts
+├       ├── user.actions.ts
+├       └── shared.types.d.ts
+├── public/
+├   ├── next.svg
+├   ├── vercel.svg
+├   └── assets/
+├       ├── icons/[[...]].svg
+├       └── images/[[...]].{svg,png}
+├── styles/
+├   ├── prism.css
+├   └── theme.css
+├── types/
+├   └── index.d.ts
+├── .eslintrc.json
+├── .gitignore
+├── .env.example
+├── .prettierrc.json
+├── README.md
+├── components.json
+├── middleware.ts
+├── next.config.js
+├── package.json
+├── package-lock.json
+├── postcss.config.js
+├── tailwind.config.ts
+└── tsconfig.json
+```
 
-## <a name="deployment">🛠️ Deployment Playground</a>
+</details>
 
-This is still WIP. Deployment will be annouced soon. <b>TBD</b>
+## ⚙️ Tech Stack
 
-## <a name="quick-start">🤸 Quick Start</a>
+<details><summary><b>DevOverflow</b> is built using the following technologies:</summary>
+
+- [TypeScript](https://www.typescriptlang.org/): TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
+- [Next.js](https://nextjs.org/): Next.js is a React framework for building server-side rendered and statically generated web applications.
+- [Tailwind CSS](https://tailwindcss.com/): Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces.
+- [ESLint](https://eslint.org/): ESLint is a static code analysis tool for identifying problematic patterns found in JavaScript code.
+- [Prettier](https://prettier.io/): Prettier is an opinionated code formatter.
+- [Clerk](https://clerk.dev/): Clerk is a developer-first authentication API that handles all the logic for user sign up, sign in, and more.
+- [Shadcn-UI](https://ui.shadcn.com/): Shadcn UI is a React UI library that helps developers rapidly build modern web applications.
+- [TinyMCE](https://www.tiny.cloud/): TinyMCE is the world's most popular JavaScript library for rich text editing.
+- [MongoDB](https://www.mongodb.com/): MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era.
+- [Mongoose](https://mongoosejs.com/): Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment.
+- [Prism.js](https://prismjs.com/): Prism is a lightweight, extensible syntax highlighter, built with modern web standards in mind.
+- [Query String](https://www.npmjs.com/package/query-string): Parse and stringify URL query strings.
+- [Svix](https://svix.com/): Svix is a webhook proxy that allows you to receive webhooks locally.
+- [Zod](https://zod.dev/): Zod is a TypeScript-first schema declaration and validation library.
+- [Vercel](https://vercel.com/): Vercel is a cloud platform for frontend developers, providing the frameworks, workflows, and infrastructure to build a faster, more personalized Web.
+
+</details><br/>
+
+[![Technologies Used](https://skillicons.dev/icons?i=ts,nextjs,tailwind,mongodb,vercel)](https://skillicons.dev)
+
+## 🔋 Features
+
+👉 **Server actions**
+
+👉 **Client and Server components**
+
+👉 **Enchanced SEO**
+
+👉 **Revalidating and caching**
+
+👉 **Authentication methods for sign-in and sign-up using Clerk**
+
+👉 **Advance MongoDB features like aggregation pipelines**
+
+👉 **Integration of OpenAI for automated answers**
+
+👉 **Recommendation system**
+
+👉 **Badge system and reputation**
+
+👉 **Counting page views**
+
+👉 **Voting system**:
+
+👉 **Advanced filters**:
+
+👉 **Global Database search**
+
+👉 **Switch between dark, light or system theme**
+
+👉 **Mobile responsive design**
+
+and many more, including code architecture and reusability
+
+## 🛠️ Deployment
+
+You can check the project live here [devstack_overflow_nextjs14](https://devstack-overflow-nextjs14.vercel.app)
+
+## 🤸 Quick Start
 
 Follow these steps to set up the project locally on your machine.
 
-**Prerequisites**
+### Prerequisites
 
 Make sure you have the following installed on your machine:
 
@@ -51,14 +255,14 @@ Make sure you have the following installed on your machine:
 - [Node.js](https://nodejs.org/en)
 - [npm](https://www.npmjs.com/) (Node Package Manager)
 
-**Cloning the Repository**
+### Cloning the Repository
 
 ```bash
 git clone https://github.com/Mastrangelis/devstack_overflow_nextjs14.git
 cd devstack_overflow_nextjs14
 ```
 
-**Installation**
+### Installation
 
 Install the project dependencies using npm:
 
@@ -66,10 +270,53 @@ Install the project dependencies using npm:
 npm install
 ```
 
-**Running the Project**
+### Enviromental variables
+
+Once you're done installing the node modules, you should rename the `.env.example`, associated with the project, to `.env.local`
+
+After that you need to set the proper values in the `env variables`.
+
+> [!IMPORTANT]
+>
+> - the application uses Clerk for Authentication and User Management, therefore, you need to create Clerk account [here](https://clerk.dev/) and set the `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` environment variables in `.env` file. Also, the different URLs for the Clerk sign-in, sign-up, after sign-in and after sign-up pages.
+> - the application uses a MongoDB database, therefore, you need to create a database and connect it to the application, for this, change the `MONGODB_URL` environment variable in `.env`
+> - the application uses TinyMCE, therefore, you need to create TinyMCE account [here](https://www.tiny.cloud/) and sets the `NEXT_PUBLIC_TINYMCE_API_KEY` environment variable in `.env` file.
+> - the application uses OpenAI API, therefore, you need to create OpenAI account [here](https://openai.com/) and sets the `OPENAI_API_KEY` environment variable in `.env` file.
+> - the application uses RapidAPI, therefore, you need to create RapidAPI account [here](https://rapidapi.com/), subscribe to the [JSearch API](https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch/) and sets the `X_RAPID_API_KEY` environment variable in `.env` file.
+
+### Running the Project
 
 ```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+
+## 🔒 Environment Variables
+
+Environment variables[^12] can be used for configuration. They must be set before running the app.
+
+> [Environment variables](https://en.wikipedia.org/wiki/Environment_variable) are variables that are set in the operating system or shell, typically used to configure programs.
+
+**DevOverflow** uses [Clerk](https://clerk.com), [TinyMCE](https://uploadthing.com/), [RapidAPI](https://rapidapi.com), [OpenAI API](https://openai.com/blog/openai-api) and [MongoDB](https://mongodb.com) as external services. You need to create an account on each of these services and get the required credentials to run the app.
+
+Create a `.env` file in the root directory of the project and add the following environment variables:
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=<CLERK_PUBLISHABLE_KEY>
+CLERK_SECRET_KEY=<CLERK_SECRET_KEY>
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+
+NEXT_PUBLIC_TINY_MCE_API_KEY=<YOUR_TINY_MCE_API_KEY>
+NEXT_CLERK_WEBHOOK_SECRET=<CLERK_WEBHOOK_SECRET>
+
+MONGODB_URL=<YOUR_MONGODB_URL>
+
+NEXT_PUBLIC_SERVER_URL=<YOUR_SERVER_URL> # locally this should be http://localhost:3000
+
+OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+
+X_RAPID_API_KEY=<YOUR_RAPID_API_KEY>
+```
