@@ -5,9 +5,9 @@ import { Button } from '../ui/button';
 
 interface NoResultProps {
   title: string;
-  description: string;
-  link: string;
-  linkTitle: string;
+  description?: string;
+  link?: string;
+  linkTitle?: string;
 }
 
 const NoResult = ({ title, description, link, linkTitle }: NoResultProps) => {
@@ -28,14 +28,18 @@ const NoResult = ({ title, description, link, linkTitle }: NoResultProps) => {
         className="hidden object-contain dark:flex"
       />
       <h2 className="h2-bold text-dark200_light900 mt-8">{title}</h2>
-      <p className="body-regular text-dark500_light700 my-3.5 max-w-md text-center">
-        {description}
-      </p>
-      <Link href={link}>
-        <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg bg-primary-500 px-4 py-3 text-light-900 dark:bg-primary-500 dark:text-light-900">
-          {linkTitle}
-        </Button>
-      </Link>
+      {description && (
+        <p className="body-regular text-dark500_light700 my-3.5 max-w-md text-center">
+          {description}
+        </p>
+      )}
+      {link && linkTitle && (
+        <Link href={link}>
+          <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg bg-primary-500 px-4 py-3 text-light-900 dark:bg-primary-500 dark:text-light-900">
+            {linkTitle}
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };

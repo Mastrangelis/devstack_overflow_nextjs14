@@ -140,3 +140,16 @@ export const removeKeysFromQuery = ({
     { skipNull: true },
   );
 };
+
+export const getCurrentCountryLocation = async () => {
+  const response = await fetch('https://api64.ipify.org?format=json');
+  const data = await response.json();
+
+  const userLocationInfoResponse = await fetch(
+    `http://ip-api.com/json/${data.ip}`,
+  );
+
+  const userLocationInfo = await userLocationInfoResponse.json();
+
+  return userLocationInfo?.country || '';
+};
