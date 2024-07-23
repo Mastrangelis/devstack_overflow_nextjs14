@@ -46,16 +46,17 @@ export interface ViewQuestionParams {
   userId: string | undefined;
 }
 
-export interface JobFilterParams {
-  query: string;
-  page: string;
-}
-
 export interface GetQuestionsParams {
   page?: number;
   pageSize?: number;
   searchQuery?: string;
   filter?: string;
+}
+
+export interface GetJobsParams {
+  page?: number;
+  location?: string;
+  query?: string;
 }
 
 export interface CreateQuestionParams {
