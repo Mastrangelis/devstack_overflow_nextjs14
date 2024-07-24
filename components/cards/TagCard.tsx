@@ -1,5 +1,4 @@
 import Link from 'next/link';
-
 interface TagCardProps {
   tag: {
     _id: string;
@@ -9,10 +8,13 @@ interface TagCardProps {
   };
 }
 
-const TagCard = async ({ tag }: TagCardProps) => {
+const TagCard = ({ tag }: TagCardProps) => {
   return (
-    <Link href={`/tags/${tag._id}`} className="shadow-light100_darknone ">
-      <article className="background-light900_dark200 light-border flex w-full flex-col items-center justify-center rounded-2xl border px-8 py-10 sm:w-[260px]">
+    <Link
+      href={`/tags/${tag._id}`}
+      className="shadow-light100_darknone flex-1 max-sm:w-full sm:min-w-[220px]"
+    >
+      <article className="background-light900_dark200 light-border flex size-full flex-col items-center justify-center rounded-2xl border px-8 py-10">
         <div className="background-light800_dark400 w-fit rounded-sm px-5 py-1.5">
           <p className="paragraph-semibold text-dark300_light900 ">
             {tag.name}

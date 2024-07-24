@@ -153,3 +153,29 @@ export const getCurrentCountryLocation = async () => {
 
   return userLocationInfo?.country || '';
 };
+
+export function kFormatter(num: number) {
+  return Math.abs(num) > 999
+    ? Math.sign(num) * ((Math.abs(num) / 1000) as any).toFixed(1) + 'k'
+    : Math.sign(num) * Math.abs(num);
+}
+
+/* eslint-disable no-unsafe-finally */
+export const formatAmountCurrency = (amount: number, currency: string) => {
+  let value = `${currency} ${amount}`;
+  try {
+    const userLocale =
+      navigator.languages && navigator.languages.length
+        ? navigator.languages[0]
+        : navigator.language;
+
+    const formatCurrency = new Intl.NumberFormat(userLocale, {
+      style: 'currency',
+      currency,
+    });
+
+    value = formatCurrency.format(amount);
+  } finally {
+    return value;
+  }
+};

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Badge } from '../ui/badge';
 import Tag from '../shared/Tag';
+import { auth } from '@clerk/nextjs/server';
 
 interface UserCardProps {
   user: {
@@ -16,12 +17,14 @@ interface UserCardProps {
 }
 
 const UserCard = async ({ user }: UserCardProps) => {
+  const { userId: clerkId } = auth();
+
   const interactedTags = await getTopInteractedTags({ userId: user._id });
 
   return (
     <Link
       href={`/profile/${user.clerkId}`}
-      className="shadow-light100_darknone w-full rounded-2xl sm:w-[280px]"
+      className="shadow-light100_darknone flex-1 rounded-2xl max-2xl:flex-wrap max-sm:w-full sm:min-w-[260px]"
     >
       <article className="background-light900_dark200 light-border flex size-full flex-col items-center rounded-2xl border p-8">
         <Image
@@ -40,7 +43,7 @@ const UserCard = async ({ user }: UserCardProps) => {
           </p>
         </div>
 
-        <div className="mt-5 flex flex-wrap">
+        <div className="mt-5 flex-1">
           {interactedTags?.length > 0 ? (
             <div className="flex flex-wrap items-center gap-2">
               {interactedTags.map((tag) => (
@@ -48,7 +51,20 @@ const UserCard = async ({ user }: UserCardProps) => {
               ))}
             </div>
           ) : (
-            <Badge>Not tags yet</Badge>
+            <div className="flex size-full flex-col items-center justify-center gap-2">
+              <Badge>Not tags yet</Badge>
+              {clerkId === user._id && (
+                <p className="small-medium text-dark400_light500 mt-3.5">
+                  Start
+                  <Link
+                    href="/ask-question"
+                    className="primary-text-gradient ml-1 cursor-pointer"
+                  >
+                    Contributing
+                  </Link>
+                </p>
+              )}
+            </div>
           )}
         </div>
       </article>

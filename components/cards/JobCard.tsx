@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 import { getCountryFlagByCode } from '@/lib/actions/country.actions';
 import Tag from '../shared/Tag';
+import { kFormatter } from '@/lib/utils';
 
 interface JobCardProps {
   job: {
@@ -28,23 +29,20 @@ const JobCard = async ({ job }: JobCardProps) => {
 
   return (
     <section className="background-light900_dark200 light-border shadow-light100_darknone flex flex-col items-start gap-6 rounded-lg border p-6 sm:flex-row sm:p-8">
-      <div className="flex min-h-[64px] w-full items-start justify-between gap-2 sm:min-w-[64px]">
-        <Link
-          href={job?.employerWebsite || ''}
-          className="size-12 rounded-xl sm:size-16"
-        >
+      <div className="flex min-h-[64px] w-full items-start justify-between gap-2">
+        <Link href={job?.employerWebsite || ''} className="size-12 rounded-xl">
           <Image
             src={job?.employerLogo || '/assets/icons/profile.svg'}
             alt={job?.employerName}
-            width={64}
-            height={64}
-            className="size-12 cursor-pointer rounded-lg object-contain sm:size-16"
+            width={48}
+            height={48}
+            className="size-12 cursor-pointer rounded-lg object-contain"
           />
         </Link>
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="flex flex-wrap items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between max-sm:flex-col max-sm:items-start max-sm:gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
               {job?.jobTitle}
@@ -55,12 +53,12 @@ const JobCard = async ({ job }: JobCardProps) => {
             />
           </div>
 
-          <div className="background-light800_dark400 gap-2 rounded-2xl px-3 py-1.5 max-sm:hidden sm:flex sm:items-center sm:justify-end">
+          <div className="background-light800_dark400 flex items-center gap-2 rounded-2xl px-3 py-1.5">
             <Image
               src={countryFlag || '/assets/icons/location.svg'}
               alt={countryFlag ? job.jobCountry : 'location'}
-              width={16}
-              height={16}
+              width={20}
+              height={20}
               className="rounded-full"
             />
             <span className="body-medium text-dark400_light700">
@@ -71,7 +69,7 @@ const JobCard = async ({ job }: JobCardProps) => {
           </div>
         </div>
 
-        <div className="body-regular text-dark500_light700 mt-2 line-clamp-3">
+        <div className="body-regular text-dark500_light700 mt-2 line-clamp-5 break-all max-sm:mt-5">
           {job.jobDescription}
         </div>
 
@@ -85,7 +83,7 @@ const JobCard = async ({ job }: JobCardProps) => {
                 height={20}
               />
 
-              <p className="body-medium text-light-500">
+              <p className="body-medium lowercase text-light-500 first-letter:uppercase">
                 {job?.employmentType}
               </p>
             </div>
@@ -100,7 +98,7 @@ const JobCard = async ({ job }: JobCardProps) => {
 
               <p className="body-medium text-light-500">
                 {job.jobMinSalary && job.jobMaxSalary
-                  ? `${job.jobMinSalary} - ${job.jobMaxSalary}`
+                  ? `$ ${kFormatter(job.jobMinSalary)} - ${kFormatter(job.jobMaxSalary)}`
                   : 'Disclosed'}
               </p>
             </div>

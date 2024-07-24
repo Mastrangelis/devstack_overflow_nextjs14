@@ -6,14 +6,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '../ui/button';
-import { SignedOut, useAuth } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 
 const LeftSidebar = () => {
-  const { userId } = useAuth();
+  const { userId, signOut } = useAuth();
   const pathname = usePathname();
 
   return (
-    <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden lg:w-[266px]">
+    <section className="background-light900_dark200 light-border custom-scrollbar sticky left-0 top-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 shadow-light-300 dark:shadow-none max-md:hidden lg:w-[266px]">
       <div className="flex flex-1 flex-col gap-6">
         {sidebarLinks.map((link) => {
           const isActive =
@@ -32,7 +32,7 @@ const LeftSidebar = () => {
             <Link
               key={link.route}
               href={link.route}
-              className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900'} flex items-center justify-start gap-4 bg-transparent p-4`}
+              className={`${isActive ? 'primary-gradient rounded-lg text-light-900' : 'text-dark300_light900 hover:rounded-lg hover:bg-primary-500/20'} flex items-center justify-start gap-4 bg-transparent p-4`}
             >
               <Image
                 src={link.imgURL}
@@ -50,6 +50,21 @@ const LeftSidebar = () => {
           );
         })}
       </div>
+
+      <SignedIn>
+        <Button
+          className="small-medium primary-gradient min-h-[41px] w-full rounded-lg px-4 py-3 text-white shadow-none ring-0 focus:ring-0"
+          onClick={() => signOut()}
+        >
+          <Image
+            src="/assets/icons/logout.svg"
+            width={20}
+            height={20}
+            alt="Logout"
+          />
+          <span className="ml-2 max-lg:hidden">Logout</span>
+        </Button>
+      </SignedIn>
 
       <SignedOut>
         <div className="flex flex-col gap-3">

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import {
@@ -9,10 +11,12 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import NavContent from './NavContent';
-import { SignedOut } from '@clerk/nextjs';
+import { SignedIn, SignedOut, useAuth } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 
 const MobileNav = () => {
+  const { signOut } = useAuth();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -21,12 +25,12 @@ const MobileNav = () => {
           width={36}
           height={36}
           alt="Menu"
-          className="invert-colors sm:hidden"
+          className="invert-colors md:hidden"
         />
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="background-light900_dark200 border-none"
+        className="background-light900_dark200 overflow-y-auto border-none"
       >
         <Link href="/" className="flex items-center gap-1">
           <Image
@@ -39,30 +43,50 @@ const MobileNav = () => {
             Dev<span className="text-primary-500">500</span>
           </p>
         </Link>
-        <div>
+        <div className="flex h-full flex-col">
           <SheetClose asChild>
             <NavContent />
           </SheetClose>
 
-          <SignedOut>
-            <div className="flex flex-col gap-3">
+          <div className="py-8">
+            <SignedIn>
               <SheetClose asChild>
-                <Link href="/sign-in">
-                  <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                    <span className="primary-text-gradient">Log in</span>
-                  </Button>
-                </Link>
+                <Button
+                  className="small-medium primary-gradient min-h-[41px] w-full rounded-lg px-4 py-3 text-white shadow-none ring-0 focus:ring-0"
+                  onClick={() => signOut()}
+                >
+                  <Image
+                    src="/assets/icons/logout.svg"
+                    width={18}
+                    height={18}
+                    alt="Logout"
+                    color="text-white"
+                  />
+                  <span className="ml-2">Logout</span>
+                </Button>
               </SheetClose>
+            </SignedIn>
 
-              <SheetClose asChild>
-                <Link href="/sign-up">
-                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
-                    Sign up
-                  </Button>
-                </Link>
-              </SheetClose>
-            </div>
-          </SignedOut>
+            <SignedOut>
+              <div className="flex flex-col gap-3">
+                <SheetClose asChild>
+                  <Link href="/sign-in">
+                    <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none ring-0 focus:ring-0">
+                      <span className="primary-text-gradient">Log in</span>
+                    </Button>
+                  </Link>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  <Link href="/sign-up">
+                    <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none ring-0 focus:ring-0">
+                      Sign up
+                    </Button>
+                  </Link>
+                </SheetClose>
+              </div>
+            </SignedOut>
+          </div>
         </div>
       </SheetContent>
     </Sheet>
