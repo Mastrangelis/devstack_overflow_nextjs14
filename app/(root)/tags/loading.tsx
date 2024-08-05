@@ -10,12 +10,9 @@ const Loading = () => {
         <Skeleton className="h-14 w-28" />
       </div>
 
-      <div className="flex flex-wrap gap-4">
+      <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-          <Skeleton
-            key={item}
-            className="h-60 w-full rounded-2xl sm:w-[260px]"
-          />
+          <Skeleton key={item} className="h-[147px] w-full rounded-2xl" />
         ))}
       </div>
     </section>
