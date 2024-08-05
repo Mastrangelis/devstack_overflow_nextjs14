@@ -19,17 +19,28 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState('');
 
   const handleThemeChange = () => {
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      setMode('dark');
-      document.documentElement.classList.add('dark');
+    const localTheme = localStorage.getItem('theme');
+    if (localTheme === 'system') {
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)',
+      ).matches;
+      document.documentElement.classList.toggle('dark', prefersDark);
+      setMode('system');
     } else {
-      setMode('light');
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.toggle('dark', localTheme === 'dark');
+      setMode(localTheme || 'dark');
     }
+    // if (
+    //   localStorage.theme === 'dark' ||
+    //   (!('theme' in localStorage) &&
+    //     window.matchMedia('(prefers-color-scheme: dark)').matches)
+    // ) {
+    //   setMode('dark');
+    //   document.documentElement.classList.add('dark');
+    // } else {
+    //   setMode('light');
+    //   document.documentElement.classList.remove('dark');
+    // }
   };
 
   useEffect(() => {
