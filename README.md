@@ -200,6 +200,7 @@ nextjs14-devoverflow/
 - [Svix](https://svix.com/): Svix is a webhook proxy that allows you to receive webhooks locally.
 - [Zod](https://zod.dev/): Zod is a TypeScript-first schema declaration and validation library.
 - [Vercel](https://vercel.com/): Vercel is a cloud platform for frontend developers, providing the frameworks, workflows, and infrastructure to build a faster, more personalized Web.
+- [OpenAI](https://openai.com/): OpenAI is known for the GPT family of large language models, the DALL-E series of text-to-image models, and a text-to-video model named Sora.
 
 </details><br/>
 
