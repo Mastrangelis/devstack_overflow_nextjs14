@@ -24,7 +24,7 @@ const UserCard = async ({ user }: UserCardProps) => {
   return (
     <Link
       href={`/profile/${user.clerkId}`}
-      className="shadow-light100_darknone flex-1 rounded-2xl max-2xl:flex-wrap max-sm:w-full sm:min-w-[260px]"
+      className="shadow-light100_darknone rounded-2xl"
     >
       <article className="background-light900_dark200 light-border flex size-full flex-col items-center rounded-2xl border p-8">
         <Image
@@ -39,22 +39,22 @@ const UserCard = async ({ user }: UserCardProps) => {
             {user.name}
           </h3>
           <p className="body-regular text-dark500_light500 mt-2 line-clamp-1">
-            {user.username}
+            @{user.username}
           </p>
         </div>
 
-        <div className="mt-5 flex-1">
+        <div className="mt-12 w-full">
           {interactedTags?.length > 0 ? (
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-3">
               {interactedTags.map((tag) => (
                 <Tag key={tag._id} _id={tag._id} name={tag.name} />
               ))}
             </div>
           ) : (
             <div className="flex size-full flex-col items-center justify-center gap-2">
-              <Badge>Not tags yet</Badge>
-              {clerkId === user._id && (
-                <p className="small-medium text-dark400_light500 mt-3.5">
+              <Badge className="text-light400_light500">No tags yet 😞</Badge>
+              {clerkId === user.clerkId && (
+                <p className="small-medium text-dark400_light500">
                   Start
                   <Link
                     href="/ask-question"

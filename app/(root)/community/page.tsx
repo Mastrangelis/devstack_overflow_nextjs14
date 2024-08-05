@@ -39,7 +39,7 @@ const Community = async ({ searchParams }: SearchParamsProps) => {
         />
       </div>
 
-      <section className="mt-12 flex flex-wrap gap-4">
+      <section className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-2">
         {users?.length > 0 ? (
           users.map((user) => <UserCard key={user._id} user={user} />)
         ) : (
