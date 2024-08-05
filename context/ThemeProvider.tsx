@@ -34,6 +34,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     handleThemeChange();
+    window.dispatchEvent(new Event('storage'));
   }, [mode]);
 
   return (

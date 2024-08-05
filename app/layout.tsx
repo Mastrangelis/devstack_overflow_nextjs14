@@ -37,9 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-        <ClerkProviderWrapper>
-          <ThemeProvider>{children}</ThemeProvider>
-        </ClerkProviderWrapper>
+        <ThemeProvider>
+          <ClerkProviderWrapper>{children}</ClerkProviderWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );
