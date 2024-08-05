@@ -53,7 +53,7 @@ const LeftSidebar = () => {
 
       <SignedIn>
         <Button
-          className="small-medium primary-gradient min-h-[41px] w-full rounded-lg px-4 py-3 text-white shadow-none ring-0 focus:ring-0"
+          className="small-medium primary-gradient min-h-[41px] w-full rounded-lg px-4 py-3 text-white shadow-none ring-0 hover:opacity-90 focus:ring-0"
           onClick={() => signOut()}
         >
           <Image
@@ -69,28 +69,25 @@ const LeftSidebar = () => {
       <SignedOut>
         <div className="flex flex-col gap-3">
           <Link href="/sign-in">
-            <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+            <Button className="small-medium primary-gradient flex min-h-[41px] w-full items-center gap-3 rounded-lg px-4 py-3 text-white shadow-none hover:opacity-90">
               <Image
                 src="/assets/icons/account.svg"
                 alt="Login"
                 width={20}
                 height={20}
-                className="invert-colors lg:hidden"
               />
-              <span className="primary-text-gradient max-lg:hidden">
-                Log in
-              </span>
+              <span className="max-lg:hidden">Log in</span>
             </Button>
           </Link>
 
           <Link href="/sign-up">
-            <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+            <Button className="small-medium btn-tertiary text-dark400_light900 flex min-h-[41px] w-full items-center gap-3 rounded-lg border border-primary-500/50 px-4 py-3 shadow-none">
               <Image
                 src="/assets/icons/signup.svg"
                 alt="Signup"
                 width={20}
                 height={20}
-                className="invert-colors lg:hidden"
+                className="invert-colors"
               />
               <span className="max-lg:hidden">Sign up</span>
             </Button>

@@ -8,6 +8,10 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+html[class='dark'] {
+  @apply bg-dark-100;
+}
+
 @layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
@@ -163,3 +167,30 @@ code {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.cl-headerSubtitle {
+  color: #c5d0e6;
+}
+.cl-logoImage {
+  width: 10rem;
+  height: 3rem;
+}
+.cl-internal-4a7e9l {
+  color: white;
+}
+
+.cl-internal-wkkub3 {
+  color: #f97535;
+}
+.cl-badge {
+  color: #f97535;
+}
+/* .cl-internal-1xpngvq {
+  color: white;
+} */
+/* .cl-button {
+  color: white;
+} */
+/* .cl-providerIcon {
+  filter: invert(1);
+} */

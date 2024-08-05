@@ -30,17 +30,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       document.documentElement.classList.toggle('dark', localTheme === 'dark');
       setMode(localTheme || 'dark');
     }
-    // if (
-    //   localStorage.theme === 'dark' ||
-    //   (!('theme' in localStorage) &&
-    //     window.matchMedia('(prefers-color-scheme: dark)').matches)
-    // ) {
-    //   setMode('dark');
-    //   document.documentElement.classList.add('dark');
-    // } else {
-    //   setMode('light');
-    //   document.documentElement.classList.remove('dark');
-    // }
   };
 
   useEffect(() => {
