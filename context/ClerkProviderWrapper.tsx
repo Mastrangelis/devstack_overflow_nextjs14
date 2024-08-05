@@ -119,7 +119,16 @@ const lightClerkMode: any = {
 };
 
 export function ClerkProviderWrapper({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState('');
+  const [mode, setMode] = useState(() => {
+    if (typeof window === 'undefined') return 'light';
+
+    const localTheme = localStorage.getItem('theme');
+    if (localTheme === 'system' || localTheme === 'dark') {
+      return 'dark';
+    } else {
+      return 'light';
+    }
+  });
 
   const getTheme = () => {
     const localTheme = localStorage.getItem('theme');
@@ -131,13 +140,9 @@ export function ClerkProviderWrapper({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    window.addEventListener('storage', () => {
-      // When storage changes refetch
-      getTheme();
-    });
+    window.addEventListener('storage', getTheme);
 
     return () => {
-      // When the component unmounts remove the event listener
       window.removeEventListener('storage', getTheme);
     };
   }, []);
